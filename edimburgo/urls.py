@@ -10,6 +10,6 @@ from edimburgo import views
 
 urlpatterns = [
     #path('', include(router.urls)),
-    path('edimburgo/', views.DatosListsView_Edimburgo.as_view(), name='crear_edimburgo'),
-    path('edimburgo/<int:pk>/', views.DatosDetailView_Edimburgo.as_view(), name='datos_edimburgo-detail'),
+    path('edimburgo/', views.DatosListsView_Edimburgo.as_view({'get': 'list'}), name='crear_edimburgo'),
+    path('consulta-edimburgo/<int:pk>/', views.DatosDetailView_Edimburgo.as_view(), name='datos_edimburgo-detail'),
 ]

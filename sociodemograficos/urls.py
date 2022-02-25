@@ -10,6 +10,6 @@ from sociodemograficos import views
 #app_name = 'sociodemograficos'
 
 urlpatterns = [
-    path('sociodemograficos/', views.DatosListsView_Sociodemograficos.as_view(), name='crear_datos'),
+    path('sociodemograficos/', views.DatosListsView_Sociodemograficos.as_view({'get': 'list'}), name='crear_datos'),
     path('sociodemograficos/<int:pk>/', views.DatosDetailView_Sociodemograficos.as_view(), name='datos-detail'),
 ]
