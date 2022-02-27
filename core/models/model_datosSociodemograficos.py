@@ -126,7 +126,7 @@ class DatosSociodemograficos(models.Model):
     enfermedad_del_neonato = models.IntegerField(
         choices=choice_enfermedadNeonato,
         default='',)
-    tipo_de_enfermedad_neonato = models.CharField(max_length=150)
+    tipo_de_enfermedad_neonato = models.IntegerField()
 
     anestesia = models.IntegerField(
         choices=choice_anetesia,
@@ -138,7 +138,7 @@ class DatosSociodemograficos(models.Model):
         choices=choice_tipoParto,
         default='',)
     edad_del_bebe = models.IntegerField()
-    lugar_de_atencion = models.CharField(max_length=150)
+    lugar_de_atencion = models.IntegerField()
     apoyo_de_familia = models.IntegerField(
         choices=choice_apoyoFamilia,
         default='',)
@@ -157,5 +157,15 @@ class DatosSociodemograficos(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     #active = models.BooleanField(default=True)
     #
+    def __str__(self):
+        return self.user.name
+
+
+
+class resultdoPrediccion(models.Model):
+    resultado = models.IntegerField()
+    created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.user.name

@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from core.models import User
 from django.utils.translation import gettext as _
 
-from core.models.model_datosSociodemograficos import DatosSociodemograficos
+from core.models.model_datosSociodemograficos import DatosSociodemograficos, resultdoPrediccion
 from core.models.model_edimburgo import CuestionarioEdimburgo
 
 
@@ -29,4 +29,5 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(DatosSociodemograficos)
+admin.site.register(resultdoPrediccion)
 admin.site.register(CuestionarioEdimburgo)
