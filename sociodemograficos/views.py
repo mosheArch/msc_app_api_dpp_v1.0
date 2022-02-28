@@ -22,24 +22,33 @@ class DatosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.ListModel
 
     def post(self, request):
         # Importar Datset
-
+        """Impotamos le dtaset con los usarios para el entrenamiento"""
         dataset = pd.read_csv('sociodemograficos/dppDataSet.csv')
+        """Dividimos os datos en X y Y siendo Y la ultima columna a predecir"""
         X = dataset.iloc[:, :-1]
         y = dataset.iloc[:, -1]
 
+        """Data serializada enviada desde el api"""
         serializer = serializers.datos_sociodemograficos_serializer(data=request.data)
 
-
+        """Validación dea Data enviada desde el cliente"""
         if serializer.is_valid():
+            """Si los datos son validos de guardan en BD"""
             serializer.save()
+            """Obtengo el id del user para guardarloe n el modelo de resultados"""
             id = serializer.data.get('user')
+
+            """Para poder meter datos en el algoritmo obtengo en un arreglo la lista de lso valores que vienen en el api"""
             dataset = serializer.data.values()
 
 
-
+            """Convierto los datos de la lista o arreglo en  tipo float """
             datosSet = list(map(float, dataset))
 
+            """Genereo un arreglo 2D"""
             datosSet = [datosSet]
+
+            """Elimino del arreglo el id del registro y el id del user ya que el algoritmo esta esperando 24 valores en un arreglo 2D"""
             del datosSet[0][0]
             del datosSet[0][-1]
 
@@ -112,17 +121,19 @@ class DatosDetailView_Sociodemograficos(generics.RetrieveAPIView, mixins.ListMod
 
 
 
-# class DatosDetailView_Sociodemograficos(APIView, mixins.ListModelMixin, mixins.CreateModelMixin):
-#     authentication_classes = (TokenAuthentication,)
-#     permission_classes = (IsAuthenticated,)
-#
-#     def get(self, request, pk):
-#         try:
-#             datos = DatosSociodemograficos.objects.get(pk=pk)
-#         except DatosSociodemograficos.DoesNotExist:
-#             return Response({'Error': 'El dato no existe'}, status=status.HTTP_404_NOT_FOUND)
-#
-#         serializer = serializers.datos_sociodemograficos_serializer(datos)
-#         return Response(serializer.data)
-#
-#
+class ResultadosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = resultdoPrediccion.objects.all()
+    serializer_class = serializers.resultados_datos_sociodemograficos_serializer
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('user_id')
+
+class ResultadosDetailView_Sociodemograficos(generics.RetrieveAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = resultdoPrediccion.objects.all()
+    serializer_class = serializers.resultados_datos_sociodemograficos_serializer
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('user_id')

@@ -12,4 +12,6 @@ from sociodemograficos import views
 urlpatterns = [
     path('sociodemograficos/', views.DatosListsView_Sociodemograficos.as_view({'get': 'list'}), name='crear_datos'),
     path('sociodemograficos/<int:pk>/', views.DatosDetailView_Sociodemograficos.as_view(), name='datos-detail'),
-]
+    path('resultados/', views.ResultadosListsView_Sociodemograficos.as_view({'get': 'list'}), name='resultados'),
+    path('resultados/<int:pk>/', views.ResultadosDetailView_Sociodemograficos.as_view(), name='resultado-detail'),
+    ]
