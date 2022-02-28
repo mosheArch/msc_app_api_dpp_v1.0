@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.models.model_edimburgo import CuestionarioEdimburgo
+from core.models.model_edimburgo import CuestionarioEdimburgo, resultdoEdimburgo
 from edimburgo import serializers
 
 
@@ -53,6 +53,31 @@ class DatosListsView_Edimburgo(viewsets.GenericViewSet, mixins.ListModelMixin, m
         serializer = serializers.datos_cuestionarioEdimburgo_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            id_user = serializer.data.get('user')
+            cuestionario = serializer.data.values()
+            cuestionario = list(cuestionario)
+            del cuestionario [0]
+            del cuestionario [-1]
+            suma = sum(cuestionario[:-1])
+
+            if cuestionario[-2] > 0:
+                guardar = resultdoEdimburgo(resultado=suma,
+                                            comentarios="Cualquier puntaje distinto de cero en la pregunta N° 10 requiere de evaluación adicional dentro de 24 horas.",
+                                            user_id=id_user)
+                guardar.save()
+            elif (suma>= 13 and cuestionario[-1] =='Embarazo'):
+                guardar = resultdoEdimburgo(resultado=suma, comentarios="Durante el embarazo Una puntuación de 13 o más puntos indica sospecha de depresión.",
+                                            user_id=id_user)
+                guardar.save()
+            elif (suma>= 10 and cuestionario[-1] =='Posparto'):
+                guardar = resultdoEdimburgo(resultado=suma, comentarios="En el posparto una puntuación de 10 o más puntos indica sospecha de depresión posparto.",
+                                            user_id=id_user)
+                guardar.save()
+            else:
+                guardar = resultdoEdimburgo(resultado=suma, comentarios="No hay alerta de depresión",
+                                            user_id=id_user)
+                guardar.save()
+
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
