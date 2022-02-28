@@ -111,3 +111,21 @@ class DatosDetailView_Edimburgo(generics.RetrieveAPIView, mixins.ListModelMixin,
 
         datos.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ResultadosListsView_Edimburgo(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = resultdoEdimburgo.objects.all()
+    serializer_class = serializers.resultados_cuestionarioEdimburgo_serializer
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('user_id')
+
+class ResultadosDetailView_Edimburgo(generics.RetrieveAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = resultdoEdimburgo.objects.all()
+    serializer_class = serializers.resultados_cuestionarioEdimburgo_serializer
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('user_id')
