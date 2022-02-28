@@ -7,4 +7,4 @@ class datos_cuestionarioEdimburgo_serializer(serializers.ModelSerializer):
     class Meta:
         model = CuestionarioEdimburgo
 
-        exclude = ['id', 'created']
+        exclude = ['created']

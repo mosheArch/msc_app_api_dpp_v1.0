@@ -4,7 +4,7 @@ from core.models import User
 from django.utils.translation import gettext as _
 
 from core.models.model_datosSociodemograficos import DatosSociodemograficos, resultdoPrediccion
-from core.models.model_edimburgo import CuestionarioEdimburgo
+from core.models.model_edimburgo import CuestionarioEdimburgo, resultdoEdimburgo
 
 
 class UserAdmin(BaseUserAdmin):
@@ -31,3 +31,4 @@ admin.site.register(User, UserAdmin)
 admin.site.register(DatosSociodemograficos)
 admin.site.register(resultdoPrediccion)
 admin.site.register(CuestionarioEdimburgo)
+admin.site.register(resultdoEdimburgo)

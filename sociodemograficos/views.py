@@ -9,7 +9,9 @@ from sociodemograficos import serializers
 
 import matplotlib.pyplot as plt
 import pandas as pd
-#data = open("sociodemograficos/dppDataSet.csv")
+
+
+# data = open("sociodemograficos/dppDataSet.csv")
 
 class DatosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
     authentication_classes = (TokenAuthentication,)
@@ -41,7 +43,6 @@ class DatosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.ListModel
             """Para poder meter datos en el algoritmo obtengo en un arreglo la lista de lso valores que vienen en el api"""
             dataset = serializer.data.values()
 
-
             """Convierto los datos de la lista o arreglo en  tipo float """
             datosSet = list(map(float, dataset))
 
@@ -52,7 +53,6 @@ class DatosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.ListModel
             del datosSet[0][0]
             del datosSet[0][-1]
 
-
             from sklearn.model_selection import train_test_split
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1, random_state=0)
 
@@ -62,7 +62,7 @@ class DatosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.ListModel
             X_train = sc_X.fit_transform(X_train)
             X_test = sc_X.transform(X_test)
 
-            datosSet = sc_X.transform(datosSet) #------------------------------------------------
+            datosSet = sc_X.transform(datosSet)  # ------------------------------------------------
             from sklearn.ensemble import AdaBoostClassifier
             algoritmo = AdaBoostClassifier(n_estimators=50, learning_rate=1)
             # algoritmo = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0).fit(X_train, y_train)
@@ -82,7 +82,7 @@ class DatosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.ListModel
             m = resultdoPrediccion(resultado=y_pred, user_id=id)
             m.save()
 
-            return Response(y_pred)  #-------------------------------------------------------------------
+            return Response(y_pred)  # -------------------------------------------------------------------
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -92,6 +92,7 @@ class DatosDetailView_Sociodemograficos(generics.RetrieveAPIView, mixins.ListMod
     permission_classes = (IsAuthenticated,)
     queryset = DatosSociodemograficos.objects.all()
     serializer_class = serializers.datos_sociodemograficos_serializer
+
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user).order_by('user_id')
 
@@ -119,8 +120,6 @@ class DatosDetailView_Sociodemograficos(generics.RetrieveAPIView, mixins.ListMod
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
-
 class ResultadosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -130,10 +129,12 @@ class ResultadosListsView_Sociodemograficos(viewsets.GenericViewSet, mixins.List
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user).order_by('user_id')
 
+
 class ResultadosDetailView_Sociodemograficos(generics.RetrieveAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = resultdoPrediccion.objects.all()
     serializer_class = serializers.resultados_datos_sociodemograficos_serializer
+
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user).order_by('user_id')
