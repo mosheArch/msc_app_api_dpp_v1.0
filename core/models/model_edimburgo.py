@@ -18,10 +18,10 @@ class CuestionarioEdimburgo(models.Model):
                         (3, 'Casi nada')}
 
     choice_pregunta3 = {
-                        (0, 'Sí, la mayoría de las veces'),
-                        (1, 'Sí, algunas veces'),
-                        (2, 'No muy a menudo'),
-                        (3, 'No, nunca')}
+                        (3, 'Sí, la mayoría de las veces'),
+                        (2, 'Sí, algunas veces'),
+                        (1, 'No muy a menudo'),
+                        (0, 'No, nunca')}
 
     choice_pregunta4 = {
                         (0, 'No, para nada'),
@@ -30,40 +30,40 @@ class CuestionarioEdimburgo(models.Model):
                         (3, 'Sí, a menudo')}
 
     choice_pregunta5 = {
-                        (0, 'Sí, bastante'),
-                        (1, 'Sí, a veces'),
-                        (2, 'No, no mucho'),
-                        (3, 'No, nada')}
+                        (3, 'Sí, bastante'),
+                        (2, 'Sí, a veces'),
+                        (1, 'No, no mucho'),
+                        (0, 'No, nada')}
 
     choice_pregunta6 = {
-                        (0, 'Sí, la mayor parte de las veces'),
-                        (1, 'Sí, a veces'),
-                        (2, 'No, casi nunca'),
-                        (3, 'No, nada')}
+                        (3, 'Sí, la mayor parte de las veces'),
+                        (2, 'Sí, a veces'),
+                        (1, 'No, casi nunca'),
+                        (0, 'No, nada')}
 
     choice_pregunta7 = {
-                        (0, 'Sí, la mayoría de las veces'),
-                        (1, 'Sí, a veces'),
-                        (2, 'No muy a menudo'),
-                        (3, 'No, nada')}
+                        (3, 'Sí, la mayoría de las veces'),
+                        (2, 'Sí, a veces'),
+                        (1, 'No muy a menudo'),
+                        (0, 'No, nada')}
 
     choice_pregunta8 = {
-                        (0, 'Sí, casi siempre'),
-                        (1, 'Sí, bastante a menudo'),
-                        (2, 'No muy a menudo'),
-                        (3, 'No, nada')}
+                        (3, 'Sí, casi siempre'),
+                        (2, 'Sí, bastante a menudo'),
+                        (1, 'No muy a menudo'),
+                        (0, 'No, nada')}
 
     choice_pregunta9 = {
-                        (0, 'Sí, casi siempre'),
-                        (1, 'Sí, bastante a menudo'),
-                        (2, 'Sólo en ocasiones'),
-                        (3, 'No, nunca')}
+                        (3, 'Sí, casi siempre'),
+                        (2, 'Sí, bastante a menudo'),
+                        (1, 'Sólo en ocasiones'),
+                        (0, 'No, nunca')}
 
     choice_pregunta10 = {
-                         (0, 'Sí, bastante a menudo'),
-                         (1, 'A veces'),
-                         (2, 'Casi nunca'),
-                         (3, 'No, nunca')}
+                         (3, 'Sí, bastante a menudo'),
+                         (2, 'A veces'),
+                         (1, 'Casi nunca'),
+                         (0, 'No, nunca')}
     choice_Estado_actual= {
              ('Embarazo', 'Embarazo'),
             ('Posparto', 'Posparto'),
